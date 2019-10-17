@@ -1,8 +1,9 @@
 #Basically I want to run a script that will sort of do an "EOS" on a machine. First step is to set time by running this command below. The part that says "Eastern Standard Time", I was hoping to have that part replaced with user input, like pressing 1, would input exactly "Pacific Standard Time" as the tzutil time only works if there are no typos. After this, I want to run other commands one by one, in a particular order.
 #
 #tzutil /s "Eastern Standard Time";net time /domain:domainname /set /y
+#Please help with #command1 & #command2. Thanks!!
 
-
+#Command1
 @echo off
 echo 'Select Time Zone:'
 
@@ -46,3 +47,19 @@ do
      pause
 }
 until ($timezoneselected -eq '1' or $timezoneselected -eq '2' or $timezoneselected -eq '3' or $timezoneselected -eq '4' or $timezoneselected -eq 'q')
+
+#Command2
+echo 'Checking for Citrix-Admins AD Group in Administrators group'
+net localgroup Administrators | findstr -i Citrix-Admins
+$groupgrep = Citrix-Admins
+
+if($groupgrep -eq Citrix-Admins){
+   write-host("AD Group: Citrix-Admins exists") do 
+} else(chef-client.bat -s 0){
+   write-host("Running Chef")
+}
+
+#Command3 - if there is a response to this which says .Net 3.5 is installed, how do I keep going on. 
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Na
+me Version, Release -ErrorAction 0 | where { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release
+ | findstr -i v3.5
