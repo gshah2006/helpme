@@ -59,7 +59,25 @@ if($groupgrep -eq Citrix-Admins){
    write-host("Running Chef")
 }
 
-#Command3 - if there is a response to this which says .Net 3.5 is installed, how do I keep going on. 
+#Command3 - if there is a response to this which says .Net 3.5 is installed, how do I keep going on. Also, check if my part works because I modified another script. I would like to verify against part of "Version" instead of "PSChildName" but not sure how to get wild card working after "3.5.xxxxx"
+
+############ Just the command I've been using...
 Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Na
 me Version, Release -ErrorAction 0 | where { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release
  | findstr -i v3.5
+#############################
+
+function CheckNetVersion {
+$netversions =@(
+  3.5
+)
+$installed = Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version, Release -ErrorAction 0 | where { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release
+$installed =(Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version, Release -ErrorAction 0 | where { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release).PSChildName
+$ami = $netversions | %{ if($installed -contains "v$_"){ return $True }}
+if($ami){
+    Write-Host '.Net 3.5 is installed.'
+  } else {
+    Write-Host 'This host is missing .Net v3.5!'
+  }
+}
+CheckNetVersion
