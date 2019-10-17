@@ -1,7 +1,7 @@
 #Basically I want to run a script that will sort of do an "EOS" on a machine. First step is to set time by running this command below. The part that says "Eastern Standard Time", I was hoping to have that part replaced with user input, like pressing 1, would input exactly "Pacific Standard Time" as the tzutil time only works if there are no typos. After this, I want to run other commands one by one, in a particular order.
 #
 #tzutil /s "Eastern Standard Time";net time /domain:domainname /set /y
-#Please help with #command1 & #command2. Thanks!!
+#Please help with #command1 & #command2, and verify #command3. Thanks!!
 
 #Command1
 @echo off
