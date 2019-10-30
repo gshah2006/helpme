@@ -31,18 +31,22 @@ do
            '1' {
                 cls
                 'You chose option #1';
+                $timezoneselected = 'Pacific Standard Time';
                 Break
            } '2' {
                 cls
                 'You chose option #2';
+                $timezoneselected = 'Eastern Standard Time';
                 Break
            } '3' {
                 cls
                 'You chose option #3';
+                $timezoneselected = 'Mountain Standard Time';
                 Break
            } '4' {
                 cls
                 'You chose option #4';
+                $timezoneselected = 'Central Standard Time';
                 Break
            } 'q' {
                 return
@@ -53,6 +57,10 @@ do
      pause
 }
 until ($timezoneselected -not 'notset')
+
+# run your command: eg:
+#   tzutil /s $timezoneselected ; net time /domain:thefacebook /set /y
+
 
 #Command2
 echo 'Checking for Citrix-Admins AD Group in Administrators group'
