@@ -30,23 +30,29 @@ do
      {
            '1' {
                 cls
-                'You chose option #1'
+                'You chose option #1';
+                Break
            } '2' {
                 cls
-                'You chose option #2'
+                'You chose option #2';
+                Break
            } '3' {
                 cls
-                'You chose option #3'
+                'You chose option #3';
+                Break
            } '4' {
                 cls
-                'You chose option #4'     
+                'You chose option #4';
+                Break
            } 'q' {
                 return
-           }
+           } Default {
+                $timezoneselected = 'notset'
+            }
      }
      pause
 }
-until ($timezoneselected -eq '1' or $timezoneselected -eq '2' or $timezoneselected -eq '3' or $timezoneselected -eq '4' or $timezoneselected -eq 'q')
+until ($timezoneselected -not 'notset')
 
 #Command2
 echo 'Checking for Citrix-Admins AD Group in Administrators group'
